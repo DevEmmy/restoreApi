@@ -9,7 +9,7 @@ const profileSchema = new Schema({
     telephone: {type: String},
     college: {type: String},
     department: {type: String},
-    user: {type: Schema.Type.ObjectId , ref:"User"},
+    user: {type: Schema.Types.ObjectId , ref:"User"},
 })
 
 const Profile = mongoose.model("Profile", profileSchema)

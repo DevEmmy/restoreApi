@@ -6,7 +6,7 @@ const { compareSync } = require('bcrypt');
 const requireLogin = require('../middlewares/requireLogin.js');
 
 
-router.post('/signup', async (req, res)=>{
+router.post('/signup',async (req, res)=>{
     const {email, password} = req.body;
     await bcrypt.hash(password, 8)
     .then(hashedpassword => {
@@ -42,3 +42,6 @@ router.post('/signin', async (req, res)=>{
         }
     })
 })
+
+
+module.exports = router

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const documentsSchema = new Schema({
     document: {type: String, require: true},
-    user: {type: Schema.Type.ObjectId , ref:"User"},
+    user: {type: Schema.Types.ObjectId , ref:"User"},
     title: {type: String },
     filter: {type: String}
 })
