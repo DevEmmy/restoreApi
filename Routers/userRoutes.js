@@ -43,5 +43,37 @@ router.post('/signin', async (req, res)=>{
     })
 })
 
+router.patch("/update-profile", requireLogin, async (req, res)=>{
+    const user = req.user._id;
+    User.findById(user)
+    .then(user => {
+        const {fullName, matricNumber, level, telephone, college, department} = req.body
+        user.fullName = fullName
+        user.matricNumber = matricNumber
+        user.level = level
+        user.telephone = telephone
+        user.college = college
+        user.department = department
+
+        User.findByIdAndUpdate(id, user, {new: true})
+        .then(resp => res.json('Successful'))
+        .catch(err => res.json("An error occured"))
+    })
+    .catch(err => res.status(403).json("An error occured"))
+})
+
+router.get('/user', requireLogin, async (req, res)=>{
+    const user = req.user._id
+    User.findById(user)
+    .then(resp => res.json(resp))
+    .catch(err => res.json(err))
+})
+
+router.get('/all-users', async (req, res)=>{
+    User.find()
+    .then(resp => res.json(resp))
+    .catch(err => res.json(err))
+})
+
 
 module.exports = router
