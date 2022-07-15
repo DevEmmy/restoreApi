@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { compareSync } = require('bcrypt');
 const requireLogin = require('../middlewares/requireLogin.js');
-const Profile = require('../Models/profile.models.js');
 const Document = require('../Models/document.models.js');
 
 router.post("/", requireLogin, async (req, res)=>{
