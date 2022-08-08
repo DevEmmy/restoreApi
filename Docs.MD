@@ -23,7 +23,10 @@ To get documents
 - GET: "/documents"
 
 To update profile
-- PATCH: "/users/"
+- PUT: "/users/"
+
+- To sign up as an admin
+- POST: "/signupAsAdmin/"
 ### Parameters
 - firstName
 - lastName
@@ -41,3 +44,6 @@ To get all users
 
 # Note: 
 All while sending an end point request, make sure you're passing Authorization header.
+
+
+Okay, to get some things straight. While making requests for authorized users, ensure you're passing thier token as headers to the api call, else nothing will be returned.

@@ -10,6 +10,8 @@ const userSchema = new Schema({
     telephone: {type: String},
     college: {type: String},
     department: {type: String},
+    avatar: {type: String},
+    admin: {type: Boolean, default:false}
 })
 
 const User = mongoose.model("User", userSchema)
