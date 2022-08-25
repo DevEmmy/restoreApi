@@ -4,7 +4,25 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { compareSync } = require('bcrypt');
 const requireLogin = require('../middlewares/requireLogin.js');
+const jwt_secret = process.env.JWT_SECRET
 
+router.get("/", async (req, res)=>{
+    await User.find()
+    .then(resp => res.json(resp))
+    .catch(err => res.json(err))
+})
+
+router.get("/addAvatar", requireLogin, async (req, res)=>{
+    const userId = req.user._id;
+    await User.findById(userId)
+    .then(resp =>{
+        resp.avatar = req.body;
+        User.findByIdAndUpdate(userId, resp, {new: true})
+        .then(resp => res.json(resp))
+        .catch(err => res.json(err))
+    })
+    .catch(err => res.status(403).json({error: "User not found"}))
+})
 
 router.post('/signup',async (req, res)=>{
     const {email, password} = req.body;
@@ -13,11 +31,11 @@ router.post('/signup',async (req, res)=>{
         const newUser = new User({email, password: hashedpassword})
         newUser.save()
         .then((resp)=>{
-            res.json({user:resp})
+            res.json(resp)
         })
-        .catch(err=>res.status(400).json({error:"An error occured"})) 
+        .catch(err=>res.json(err)) 
     })
-   
+   .catch(err => res.json(err))
 })
 
 router.post('/signupAsAdmin',async (req, res)=>{
@@ -61,8 +79,9 @@ router.put("/update-profile", requireLogin, async (req, res)=>{
     const user = req.user._id;
     User.findById(user)
     .then(user => {
-        const {fullName, matricNumber, level, telephone, college, department, avatar} = req.body
+        const {firstName, lastName, matricNumber, level, telephone, college, department, avatar} = req.body
         user.fullName = fullName
+        user.lastName = lastName
         user.matricNumber = matricNumber
         user.level = level
         user.telephone = telephone

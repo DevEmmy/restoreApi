@@ -23,7 +23,7 @@ To get documents
 - GET: "/documents"
 
 To update profile
-- PUT: "/users/"
+- PUT: "/users/update-profile"
 
 - To sign up as an admin
 - POST: "/signupAsAdmin/"
