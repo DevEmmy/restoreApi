@@ -12,7 +12,7 @@ router.get("/", async (req, res)=>{
     .catch(err => res.json(err))
 })
 
-router.get("/addAvatar", requireLogin, async (req, res)=>{
+router.post("/addAvatar", requireLogin, async (req, res)=>{
     const userId = req.user._id;
     await User.findById(userId)
     .then(resp =>{
@@ -31,7 +31,16 @@ router.post('/signup',async (req, res)=>{
         const newUser = new User({email, password: hashedpassword})
         newUser.save()
         .then((resp)=>{
-            res.json(resp)
+            bcrypt.compare(password, resp.password)
+            .then(doMatch=>{
+                if(doMatch){
+                    const token = jwt.sign({_id: resp._id}, jwt_secret)
+                    res.json({token: token, user: resp})
+                }
+                else{
+                    res.json({error: "Wrong Password"})
+                }
+            })
         })
         .catch(err=>res.json(err)) 
     })
@@ -65,7 +74,7 @@ router.post('/signin', async (req, res)=>{
                 if(doMatch){
                     
                     const token = jwt.sign({_id: user._id}, jwt_secret)
-                    res.json({token: token})
+                    res.json({token: token, user: user})
                 }
                 else{
                     res.json({error: "Wrong Password"})
@@ -74,6 +83,7 @@ router.post('/signin', async (req, res)=>{
         }
     })
 })
+
 
 router.put("/update-profile", requireLogin, async (req, res)=>{
     const user = req.user._id;
