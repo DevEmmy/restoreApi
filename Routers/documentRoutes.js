@@ -9,7 +9,7 @@ const Document = require('../Models/document.models.js');
 router.post("/", requireLogin, async (req, res)=>{
     const document = req.body
     document.user = req.user
-    new Document.save(document).save()
+    new Document.save(document)
     .then(resp => res.json({message: "Uploaded successfully"}))
     .catch(err => res.json({message: "An error occured"}))
 })
