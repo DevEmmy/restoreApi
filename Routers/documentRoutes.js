@@ -27,4 +27,12 @@ router.get("/", requireLogin, async (req, res)=>{
     .catch(err => res.json(err))
 })
 
+router.delete("/:id", requireLogin, async (req, res)=>{
+    const user = req.user._id
+    const {id} = req.params
+    Document.findByIdAndDelete(id)
+    .then(resp => res.json({message: "Deleted Successfully"}))
+    .catch(err => res.json(err))
+})
+
 module.exports = router
