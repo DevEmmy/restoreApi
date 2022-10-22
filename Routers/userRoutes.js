@@ -85,7 +85,7 @@ router.post('/signin', async (req, res)=>{
 })
 
 
-router.put("/update-profile/:id", requireLogin, async (req, res)=>{
+router.put("/update-profile", requireLogin, async (req, res)=>{
     const user = req.user._id;
     await User.findById(user)
     .then(user => {
