@@ -103,7 +103,7 @@ router.put("/update-profile", requireLogin, async (req, res)=>{
         .then(resp => res.json('Successful'))
         .catch(err => res.json("An error occured"))
     })
-    .catch(err => res.status(403).json("An error occured"))
+    .catch(err => res.json(err))
 })
 
 router.get('/user', requireLogin, async (req, res)=>{
