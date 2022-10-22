@@ -103,7 +103,7 @@ router.put("/update-profile/:id", requireLogin, async (req, res)=>{
         .then(resp => res.json({message: "Successful"}))
         .catch(err => res.json({message: "An error occured"}))
     })
-    .catch(err => res.status(400).json(err))
+    .catch(err => res.json(err))
 //     const user = req.user._id
 //    await User.findById(user)
 //     .then(resp => res.json(resp))
