@@ -11,8 +11,9 @@ app.use(cors({
     origin: "*"
 }))
 
-const port = process.env.PORT || 5555
+const port = process.env.PORT || 5656
 const uri = process.env.DB_URI
+// "mongodb://127.0.0.1:27017/rediones"
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const connection = mongoose.connection

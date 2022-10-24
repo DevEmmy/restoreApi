@@ -87,10 +87,11 @@ router.post('/signin', async (req, res)=>{
 
 router.put("/update-profile", requireLogin, async (req, res)=>{
     const user = req.user._id;
+    console.log(user)
     await User.findById(user)
     .then(user => {
         const {firstName, lastName, matricNumber, level, telephone, college, department, avatar} = req.body
-        user.fullName = fullName
+        user.firstName = firstName
         user.lastName = lastName
         user.matricNumber = matricNumber
         user.level = level
@@ -99,11 +100,11 @@ router.put("/update-profile", requireLogin, async (req, res)=>{
         user.department = department
         user.avatar = avatar
 
-        User.findByIdAndUpdate(id, user, {new: true})
+        User.findByIdAndUpdate(req.user._id, user, {new: true})
         .then(resp => res.json({message: "Successful"}))
         .catch(err => res.json({message: "An error occured"}))
     })
-    .catch(err => res.json(err))
+    .catch(err => res.status(400).json(err))
 //     const user = req.user._id
 //    await User.findById(user)
 //     .then(resp => res.json(resp))
